@@ -1,0 +1,444 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    NUMERO
+
+Grammar
+
+Rule 0     S' -> program
+Rule 1     program -> PROGRAM ID LPAREN RPAREN LBRACE statements RBRACE
+Rule 2     statements -> statement
+Rule 3     statements -> statement statements
+Rule 4     statement -> declaration
+Rule 5     statement -> read_statement
+Rule 6     statement -> assign_statement
+Rule 7     statement -> printf_statement
+Rule 8     statement -> end_statement
+Rule 9     declaration -> INT ID var_list SEMICOLON
+Rule 10    var_list -> COMMA ID var_list
+Rule 11    var_list -> empty
+Rule 12    read_statement -> READ ID SEMICOLON
+Rule 13    assign_statement -> ID ASSIGN ID PLUS ID SEMICOLON
+Rule 14    printf_statement -> PRINTF LPAREN STRING RPAREN
+Rule 15    end_statement -> END SEMICOLON
+Rule 16    empty -> <empty>
+
+Terminals, with rules where they appear
+
+ASSIGN               : 13
+COMMA                : 10
+END                  : 15
+ID                   : 1 9 10 12 13 13 13
+INT                  : 9
+LBRACE               : 1
+LPAREN               : 1 14
+NUMERO               : 
+PLUS                 : 13
+PRINTF               : 14
+PROGRAM              : 1
+RBRACE               : 1
+READ                 : 12
+RPAREN               : 1 14
+SEMICOLON            : 9 12 13 15
+STRING               : 14
+error                : 
+
+Nonterminals, with rules where they appear
+
+assign_statement     : 6
+declaration          : 4
+empty                : 11
+end_statement        : 8
+printf_statement     : 7
+program              : 0
+read_statement       : 5
+statement            : 2 3
+statements           : 1 3
+var_list             : 9 10
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . program
+    (1) program -> . PROGRAM ID LPAREN RPAREN LBRACE statements RBRACE
+
+    PROGRAM         shift and go to state 2
+
+    program                        shift and go to state 1
+
+state 1
+
+    (0) S' -> program .
+
+
+
+state 2
+
+    (1) program -> PROGRAM . ID LPAREN RPAREN LBRACE statements RBRACE
+
+    ID              shift and go to state 3
+
+
+state 3
+
+    (1) program -> PROGRAM ID . LPAREN RPAREN LBRACE statements RBRACE
+
+    LPAREN          shift and go to state 4
+
+
+state 4
+
+    (1) program -> PROGRAM ID LPAREN . RPAREN LBRACE statements RBRACE
+
+    RPAREN          shift and go to state 5
+
+
+state 5
+
+    (1) program -> PROGRAM ID LPAREN RPAREN . LBRACE statements RBRACE
+
+    LBRACE          shift and go to state 6
+
+
+state 6
+
+    (1) program -> PROGRAM ID LPAREN RPAREN LBRACE . statements RBRACE
+    (2) statements -> . statement
+    (3) statements -> . statement statements
+    (4) statement -> . declaration
+    (5) statement -> . read_statement
+    (6) statement -> . assign_statement
+    (7) statement -> . printf_statement
+    (8) statement -> . end_statement
+    (9) declaration -> . INT ID var_list SEMICOLON
+    (12) read_statement -> . READ ID SEMICOLON
+    (13) assign_statement -> . ID ASSIGN ID PLUS ID SEMICOLON
+    (14) printf_statement -> . PRINTF LPAREN STRING RPAREN
+    (15) end_statement -> . END SEMICOLON
+
+    INT             shift and go to state 15
+    READ            shift and go to state 16
+    ID              shift and go to state 7
+    PRINTF          shift and go to state 17
+    END             shift and go to state 18
+
+    statements                     shift and go to state 8
+    statement                      shift and go to state 9
+    declaration                    shift and go to state 10
+    read_statement                 shift and go to state 11
+    assign_statement               shift and go to state 12
+    printf_statement               shift and go to state 13
+    end_statement                  shift and go to state 14
+
+state 7
+
+    (13) assign_statement -> ID . ASSIGN ID PLUS ID SEMICOLON
+
+    ASSIGN          shift and go to state 19
+
+
+state 8
+
+    (1) program -> PROGRAM ID LPAREN RPAREN LBRACE statements . RBRACE
+
+    RBRACE          shift and go to state 20
+
+
+state 9
+
+    (2) statements -> statement .
+    (3) statements -> statement . statements
+    (2) statements -> . statement
+    (3) statements -> . statement statements
+    (4) statement -> . declaration
+    (5) statement -> . read_statement
+    (6) statement -> . assign_statement
+    (7) statement -> . printf_statement
+    (8) statement -> . end_statement
+    (9) declaration -> . INT ID var_list SEMICOLON
+    (12) read_statement -> . READ ID SEMICOLON
+    (13) assign_statement -> . ID ASSIGN ID PLUS ID SEMICOLON
+    (14) printf_statement -> . PRINTF LPAREN STRING RPAREN
+    (15) end_statement -> . END SEMICOLON
+
+    RBRACE          reduce using rule 2 (statements -> statement .)
+    INT             shift and go to state 15
+    READ            shift and go to state 16
+    ID              shift and go to state 7
+    PRINTF          shift and go to state 17
+    END             shift and go to state 18
+
+    statement                      shift and go to state 9
+    statements                     shift and go to state 21
+    declaration                    shift and go to state 10
+    read_statement                 shift and go to state 11
+    assign_statement               shift and go to state 12
+    printf_statement               shift and go to state 13
+    end_statement                  shift and go to state 14
+
+state 10
+
+    (4) statement -> declaration .
+
+    INT             reduce using rule 4 (statement -> declaration .)
+    READ            reduce using rule 4 (statement -> declaration .)
+    ID              reduce using rule 4 (statement -> declaration .)
+    PRINTF          reduce using rule 4 (statement -> declaration .)
+    END             reduce using rule 4 (statement -> declaration .)
+    RBRACE          reduce using rule 4 (statement -> declaration .)
+
+
+state 11
+
+    (5) statement -> read_statement .
+
+    INT             reduce using rule 5 (statement -> read_statement .)
+    READ            reduce using rule 5 (statement -> read_statement .)
+    ID              reduce using rule 5 (statement -> read_statement .)
+    PRINTF          reduce using rule 5 (statement -> read_statement .)
+    END             reduce using rule 5 (statement -> read_statement .)
+    RBRACE          reduce using rule 5 (statement -> read_statement .)
+
+
+state 12
+
+    (6) statement -> assign_statement .
+
+    INT             reduce using rule 6 (statement -> assign_statement .)
+    READ            reduce using rule 6 (statement -> assign_statement .)
+    ID              reduce using rule 6 (statement -> assign_statement .)
+    PRINTF          reduce using rule 6 (statement -> assign_statement .)
+    END             reduce using rule 6 (statement -> assign_statement .)
+    RBRACE          reduce using rule 6 (statement -> assign_statement .)
+
+
+state 13
+
+    (7) statement -> printf_statement .
+
+    INT             reduce using rule 7 (statement -> printf_statement .)
+    READ            reduce using rule 7 (statement -> printf_statement .)
+    ID              reduce using rule 7 (statement -> printf_statement .)
+    PRINTF          reduce using rule 7 (statement -> printf_statement .)
+    END             reduce using rule 7 (statement -> printf_statement .)
+    RBRACE          reduce using rule 7 (statement -> printf_statement .)
+
+
+state 14
+
+    (8) statement -> end_statement .
+
+    INT             reduce using rule 8 (statement -> end_statement .)
+    READ            reduce using rule 8 (statement -> end_statement .)
+    ID              reduce using rule 8 (statement -> end_statement .)
+    PRINTF          reduce using rule 8 (statement -> end_statement .)
+    END             reduce using rule 8 (statement -> end_statement .)
+    RBRACE          reduce using rule 8 (statement -> end_statement .)
+
+
+state 15
+
+    (9) declaration -> INT . ID var_list SEMICOLON
+
+    ID              shift and go to state 22
+
+
+state 16
+
+    (12) read_statement -> READ . ID SEMICOLON
+
+    ID              shift and go to state 23
+
+
+state 17
+
+    (14) printf_statement -> PRINTF . LPAREN STRING RPAREN
+
+    LPAREN          shift and go to state 24
+
+
+state 18
+
+    (15) end_statement -> END . SEMICOLON
+
+    SEMICOLON       shift and go to state 25
+
+
+state 19
+
+    (13) assign_statement -> ID ASSIGN . ID PLUS ID SEMICOLON
+
+    ID              shift and go to state 26
+
+
+state 20
+
+    (1) program -> PROGRAM ID LPAREN RPAREN LBRACE statements RBRACE .
+
+    $end            reduce using rule 1 (program -> PROGRAM ID LPAREN RPAREN LBRACE statements RBRACE .)
+
+
+state 21
+
+    (3) statements -> statement statements .
+
+    RBRACE          reduce using rule 3 (statements -> statement statements .)
+
+
+state 22
+
+    (9) declaration -> INT ID . var_list SEMICOLON
+    (10) var_list -> . COMMA ID var_list
+    (11) var_list -> . empty
+    (16) empty -> .
+
+    COMMA           shift and go to state 28
+    SEMICOLON       reduce using rule 16 (empty -> .)
+
+    var_list                       shift and go to state 27
+    empty                          shift and go to state 29
+
+state 23
+
+    (12) read_statement -> READ ID . SEMICOLON
+
+    SEMICOLON       shift and go to state 30
+
+
+state 24
+
+    (14) printf_statement -> PRINTF LPAREN . STRING RPAREN
+
+    STRING          shift and go to state 31
+
+
+state 25
+
+    (15) end_statement -> END SEMICOLON .
+
+    INT             reduce using rule 15 (end_statement -> END SEMICOLON .)
+    READ            reduce using rule 15 (end_statement -> END SEMICOLON .)
+    ID              reduce using rule 15 (end_statement -> END SEMICOLON .)
+    PRINTF          reduce using rule 15 (end_statement -> END SEMICOLON .)
+    END             reduce using rule 15 (end_statement -> END SEMICOLON .)
+    RBRACE          reduce using rule 15 (end_statement -> END SEMICOLON .)
+
+
+state 26
+
+    (13) assign_statement -> ID ASSIGN ID . PLUS ID SEMICOLON
+
+    PLUS            shift and go to state 32
+
+
+state 27
+
+    (9) declaration -> INT ID var_list . SEMICOLON
+
+    SEMICOLON       shift and go to state 33
+
+
+state 28
+
+    (10) var_list -> COMMA . ID var_list
+
+    ID              shift and go to state 34
+
+
+state 29
+
+    (11) var_list -> empty .
+
+    SEMICOLON       reduce using rule 11 (var_list -> empty .)
+
+
+state 30
+
+    (12) read_statement -> READ ID SEMICOLON .
+
+    INT             reduce using rule 12 (read_statement -> READ ID SEMICOLON .)
+    READ            reduce using rule 12 (read_statement -> READ ID SEMICOLON .)
+    ID              reduce using rule 12 (read_statement -> READ ID SEMICOLON .)
+    PRINTF          reduce using rule 12 (read_statement -> READ ID SEMICOLON .)
+    END             reduce using rule 12 (read_statement -> READ ID SEMICOLON .)
+    RBRACE          reduce using rule 12 (read_statement -> READ ID SEMICOLON .)
+
+
+state 31
+
+    (14) printf_statement -> PRINTF LPAREN STRING . RPAREN
+
+    RPAREN          shift and go to state 35
+
+
+state 32
+
+    (13) assign_statement -> ID ASSIGN ID PLUS . ID SEMICOLON
+
+    ID              shift and go to state 36
+
+
+state 33
+
+    (9) declaration -> INT ID var_list SEMICOLON .
+
+    INT             reduce using rule 9 (declaration -> INT ID var_list SEMICOLON .)
+    READ            reduce using rule 9 (declaration -> INT ID var_list SEMICOLON .)
+    ID              reduce using rule 9 (declaration -> INT ID var_list SEMICOLON .)
+    PRINTF          reduce using rule 9 (declaration -> INT ID var_list SEMICOLON .)
+    END             reduce using rule 9 (declaration -> INT ID var_list SEMICOLON .)
+    RBRACE          reduce using rule 9 (declaration -> INT ID var_list SEMICOLON .)
+
+
+state 34
+
+    (10) var_list -> COMMA ID . var_list
+    (10) var_list -> . COMMA ID var_list
+    (11) var_list -> . empty
+    (16) empty -> .
+
+    COMMA           shift and go to state 28
+    SEMICOLON       reduce using rule 16 (empty -> .)
+
+    var_list                       shift and go to state 37
+    empty                          shift and go to state 29
+
+state 35
+
+    (14) printf_statement -> PRINTF LPAREN STRING RPAREN .
+
+    INT             reduce using rule 14 (printf_statement -> PRINTF LPAREN STRING RPAREN .)
+    READ            reduce using rule 14 (printf_statement -> PRINTF LPAREN STRING RPAREN .)
+    ID              reduce using rule 14 (printf_statement -> PRINTF LPAREN STRING RPAREN .)
+    PRINTF          reduce using rule 14 (printf_statement -> PRINTF LPAREN STRING RPAREN .)
+    END             reduce using rule 14 (printf_statement -> PRINTF LPAREN STRING RPAREN .)
+    RBRACE          reduce using rule 14 (printf_statement -> PRINTF LPAREN STRING RPAREN .)
+
+
+state 36
+
+    (13) assign_statement -> ID ASSIGN ID PLUS ID . SEMICOLON
+
+    SEMICOLON       shift and go to state 38
+
+
+state 37
+
+    (10) var_list -> COMMA ID var_list .
+
+    SEMICOLON       reduce using rule 10 (var_list -> COMMA ID var_list .)
+
+
+state 38
+
+    (13) assign_statement -> ID ASSIGN ID PLUS ID SEMICOLON .
+
+    INT             reduce using rule 13 (assign_statement -> ID ASSIGN ID PLUS ID SEMICOLON .)
+    READ            reduce using rule 13 (assign_statement -> ID ASSIGN ID PLUS ID SEMICOLON .)
+    ID              reduce using rule 13 (assign_statement -> ID ASSIGN ID PLUS ID SEMICOLON .)
+    PRINTF          reduce using rule 13 (assign_statement -> ID ASSIGN ID PLUS ID SEMICOLON .)
+    END             reduce using rule 13 (assign_statement -> ID ASSIGN ID PLUS ID SEMICOLON .)
+    RBRACE          reduce using rule 13 (assign_statement -> ID ASSIGN ID PLUS ID SEMICOLON .)
+

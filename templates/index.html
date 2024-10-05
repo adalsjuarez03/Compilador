@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Análisis Léxico</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 50%;
+            max-width: 800px;
+            margin: 20px;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .bordered-group {
+            border: 2px solid #022750;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        textarea {
+            box-sizing: border-box;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            resize: vertical;
+            color: #999;
+        }
+        textarea:focus {
+            color: #000;
+        }
+        textarea::placeholder {
+            color: #999;
+        }
+        .text-area-small {
+            width: 100%;
+        }
+        .button {
+            width: 100%;
+            height: 60px;
+            padding: 0 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #07b813cf;
+            color: #fff;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #4b38c5cf;
+        }
+        .results-container {
+            width: 100%;
+            border: 2px solid #ddd;
+            padding: 10px;
+            border-radius: 5px;
+            min-height: 100px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 8px;
+        }
+        th {
+            background-color: #929dbdcf;
+            color: #fff;
+            text-align: center;
+        }
+        td {
+            text-align: right;
+        }
+        .no-tokens {
+            text-align: center;
+            color: #999;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Mi primer Analizador Lexico y Sintáctico Web</h1>
+        <form method="post">
+            <div class="bordered-group">
+                <textarea id="codeArea" name="text" rows="10" cols="50" class="text-area-small" placeholder="Inserta tu código aquí">{{ text if text else '' }}</textarea>
+                <div style="display: flex; gap: 10px;">
+                    <input type="submit" value="Analizar" class="button">
+                    <button type="button" class="button" onclick="clearTextArea()">Limpiar</button>
+                </div>
+            </div>
+        </form>
+
+        <h2>Resultados</h2>
+        <div class="results-container">
+            {% if tokens %}
+            <center><h3>Analizador Léxico</h3></center>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Línea</th>
+                        <th>Token</th>
+                        <th>PR</th>
+                        <th>ID</th>
+                        <th>Variables</th>  <!-- Nueva columna -->
+                        <th>Número</th>      <!-- Nueva columna -->
+                        <th>Símbolo</th>
+                        <th>Cadena</th>      <!-- Nueva columna -->
+                        <th>Descripción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for token in tokens %}
+                    <tr>
+                        <td>{{ token['line'] }}</td>
+                        <td>{{ token['token'] }}</td>
+                        <td>{% if token['category'] == 'PR' %}X{% endif %}</td>
+                        <td>{% if token['category'] == 'ID' %}X{% endif %}</td>
+                        <td>{% if token['token'] in ['a', 'b', 'c'] %}X{% endif %}</td>  <!-- Nueva columna variables -->
+                        <td>{% if token['category'] == 'Número' %}X{% endif %}</td>         <!-- Nueva columna número -->
+                        <td>{% if token['category'] == 'Símbolo' %}X{% endif %}</td>
+                        <td>{% if token['category'] == 'Cadena' %}X{% endif %}</td>        <!-- Nueva columna cadena -->
+                        <td>{{ token['description'] }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            <!-- Tabla de resumen de totales -->
+            <center><h3>Resumen de Totales</h3></center>
+            <table>
+                <tr>
+                    <th>Total Tokens</th>
+                    <th>Total PR</th>
+                    <th>Total ID</th>
+                    <th>Total Variables</th>  <!-- Nueva columna -->
+                    <th>Total Números</th>      <!-- Nueva columna -->
+                    <th>Total Símbolos</th>
+                    <th>Total Cadenas</th       <!-- Nueva columna -->
+                </tr>
+                <tr>
+                    <td>{{ total_tokens }}</td>
+                    <td>{{ total_pr }}</td>
+                    <td>{{ total_id }}</td>
+                    <td>{{ total_variables }}</td>   <!-- Nueva columna -->
+                    <td>{{ total_numeros }}</td>      <!-- Nueva columna -->
+                    <td>{{ total_symbols }}</td>
+                    <td>{{ total_cadenas }}</td        <!-- Nueva columna -->
+                </tr>
+            </table>
+            
+
+                <center><h3>Analizador Sintáctico</h3></center>
+                <table>
+                    <tr>
+                        <center><th>Error de Sintaxis</th></center>
+                    </tr>
+                    {% if error_messages %}
+                        {% for error in error_messages %}
+                        <tr>
+                            <center><td>{{ error }}</td></center>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td>No hay errores.</td>
+                        </tr>
+                    {% endif %}
+                </table>
+
+                
+            {% else %}
+                <div class="no-tokens">No se han encontrado tokens.</div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <script>
+        function clearTextArea() {
+            document.getElementById('codeArea').value = '';
+        }
+    </script>
+</body>
+</html>
